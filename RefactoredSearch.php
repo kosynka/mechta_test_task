@@ -2,19 +2,21 @@
 
 namespace VBulletin\Search;
 
-use VBulletin\Database\Database;
 use VBulletin\Log\LoggerInterface;
 use VBulletin\Render\Render;
 use Exception;
 use PDO;
+use VBulletin\Log\DatabaseInterface;
 
 class RefactoredSearch
 {
     private $db;
+    private $logger;
 
-    public function __construct(private LoggerInterface $logger, private Render $renderer)
+    public function __construct(private Render $renderer)
     {
-        $this->db = Database::getInstance();
+        $this->logger = LoggerInterface::getInstance();
+        $this->db = DatabaseInterface::getInstance();
     }
 
     public function doSearch(): void

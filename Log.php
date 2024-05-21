@@ -4,8 +4,13 @@ namespace VBulletin\Log;
 
 use Exception;
 
+/**
+ * Простой синглтон логгер без разделения логики
+ */
 class Log implements LoggerInterface
 {
+    private string $channel;
+    private static $instance;
     private array $channels = [
         'default' => [
             'root' => '/var/www/',
@@ -17,9 +22,17 @@ class Log implements LoggerInterface
         ],
     ];
 
-    public function __construct(private string $channel = 'default')
+    public static function getInstance()
     {
-        $this->channel = $this->channels[$channel];
+        if (empty(self::$instance)) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+    public function __construct()
+    {
     }
 
     public function channel(string $name): self

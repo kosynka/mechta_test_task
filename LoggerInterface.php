@@ -4,6 +4,7 @@ namespace VBulletin\Log;
 
 interface LoggerInterface
 {
+    public static function getInstance();
     public function channel(string $name): self;
 
     public function info(string $message): void;
